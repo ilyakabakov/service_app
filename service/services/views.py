@@ -11,8 +11,8 @@ class SubscriptionView(ReadOnlyModelViewSet):
         'plan',
         Prefetch('client', queryset=Client.objects.all().select_related('user').only('company_name',
                                                                                      'user__email'))
-    ).annotate(price=F('service__full_price') -
-                     F('service__full_price') * F('plan__discount_percent') / 100.00)
+    )#.annotate(price=F('service__full_price') -
+     #                F('service__full_price') * F('plan__discount_percent') / 100.00)
     # .prefetch_related('client').prefetch_related('client__user')  # This "prefetches" used for solving N+1 queries problems,
     # but still the many fields in queryset. In class Prefetch we can customize the queryset for uses fields only
     serializer_class = SubscriptionSerializer
